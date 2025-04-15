@@ -1,9 +1,13 @@
 import "../styles/targetselector.css";
-
-function TargetSelector({ x, y }) {
-  console.log("TargetSelector rendered at", x, y);
-
+import api from "../../api.js";
+function TargetSelector({ x, y, relativeX, relativeY }) {
   //handle check if it matches
+
+  const handleClick = async function (name, relativeX, relativeY) {
+    const result = await api.get(`/check/${name}/${relativeX}/${relativeY}`);
+
+    console.log(result);
+  };
 
   return (
     <>
@@ -14,7 +18,7 @@ function TargetSelector({ x, y }) {
           position: "absolute",
           top: `${y}px`,
           left: `${x}px`,
-          transform: "translate(-130%, -100%)",
+          transform: "translate(-40%, -120%)",
           zIndex: 9999,
           borderRadius: "6px",
           color: "black", // make sure text is visible
@@ -23,13 +27,25 @@ function TargetSelector({ x, y }) {
       >
         <ul className="targetSelector">
           <li>
-            <img src="/characters/meg.png" alt="Meg" />
+            <img
+              src="/characters/meg.png"
+              alt="Meg"
+              onClick={() => handleClick("Meg", relativeX, relativeY)}
+            />
           </li>
           <li>
-            <img src="/characters/darknight.png" alt="Dark Knight" />
+            <img
+              src="/characters/darknight.png"
+              alt="Batman"
+              onClick={() => handleClick("Batman", relativeX, relativeY)}
+            />
           </li>
           <li>
-            <img src="/characters/joker.png" alt="Joker" />
+            <img
+              src="/characters/joker.png"
+              alt="Joker"
+              onClick={() => handleClick("Joker", relativeX, relativeY)}
+            />
           </li>
         </ul>
       </div>

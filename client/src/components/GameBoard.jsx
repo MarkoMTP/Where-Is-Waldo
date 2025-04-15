@@ -13,8 +13,7 @@ function Gameboard() {
     const relativeX = (x / rect.width) * 100;
     const relativeY = (y / rect.width) * 100;
 
-    console.log(relativeX, relativeY);
-    setClickCoords({ x, y });
+    setClickCoords({ x, y, relativeX, relativeY });
   };
 
   return (
@@ -44,6 +43,8 @@ function Gameboard() {
         <TargetSelector
           x={clickCoords.x}
           y={clickCoords.y}
+          relativeX={clickCoords.relativeX}
+          relativeY={clickCoords.relativeY}
           onClose={() => setClickCoords(null)}
         />
       )}
