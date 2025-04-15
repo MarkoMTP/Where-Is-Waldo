@@ -1,10 +1,14 @@
-import findAllChars from "../queries";
+import checkGame from "../middleware/checkGame.js";
+import findAllChars from "../queries.js";
+import { updateIsFound } from "../queries.js";
 
 export default async function controllerCheckCharacter(req, res) {
   try {
-    const { name, relativeX, relativeY } = req.body;
-
+    const { name, x, y } = req.params;
+    const relativeX = Number(x);
+    const relativeY = Number(y);
     const TOLERANCE = 15;
+
     const xMin = relativeX - TOLERANCE;
     const xMax = relativeX + TOLERANCE;
     const yMin = relativeY - TOLERANCE;
@@ -28,9 +32,16 @@ export default async function controllerCheckCharacter(req, res) {
       character.y >= yMin &&
       character.y <= yMax
     ) {
-      return res.status(200).send(`${name} has been Found`);
+      await updateIsFound(name);
+      const isGameFinished = await checkGame();
+
+      if (isGameFinished === true) {
+        return res.status(200).send("Game Finished Congratulations!");
+      } else {
+        return res.status(200).send(`${name} has been Found`);
+      }
     } else {
-      return res.status(200).send("Name matched but coordinates no");
+      return res.status(404).send("Name matched but coordinates don't");
     }
   } catch (err) {
     console.error(err);
