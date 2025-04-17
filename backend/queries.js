@@ -1,6 +1,4 @@
-import { Prisma, PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import prisma from "./prisma/prismaClient.js";
 
 export default async function findAllChars() {
   const characters = await prisma.wantedChars.findMany();

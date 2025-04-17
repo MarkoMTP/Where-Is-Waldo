@@ -5,7 +5,6 @@ import app from "../server.js";
 import { afterAll, beforeEach, describe, expect, it } from "vitest";
 
 //prisma setup
-process.env.NODE_ENV = "test";
 import dotenv from "dotenv";
 dotenv.config({ path: ".env" });
 import prisma from "../prisma/prismaClient.js";

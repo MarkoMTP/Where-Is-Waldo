@@ -3,6 +3,9 @@ import findAllChars from "../queries.js";
 export default async function checkGame() {
   try {
     const characters = await findAllChars();
+    console.log(
+      `characters 1${characters[0].isFound} 2${characters[1].isFound} 3${characters[2].isFound} `
+    );
 
     const foundCount = characters.filter((char) => char.isFound).length;
 
