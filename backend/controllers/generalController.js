@@ -1,5 +1,5 @@
 import checkGame from "../middleware/checkGame.js";
-import findAllChars from "../queries.js";
+import findAllChars, { addNewStartTime } from "../queries.js";
 import { updateIsFound } from "../queries.js";
 
 export default async function controllerCheckCharacter(req, res) {
@@ -43,6 +43,16 @@ export default async function controllerCheckCharacter(req, res) {
     } else {
       return res.status(404).send("Name matched but coordinates don't");
     }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error" });
+  }
+}
+
+export async function startGame(req, res) {
+  try {
+    await addNewStartTime();
+    res.status(404).send("Game Started");
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Server error" });

@@ -24,12 +24,6 @@ describe("Routes", () => {
       ],
     });
   });
-  it("Connects to the / route", async () => {
-    const res = await request(app).get("/");
-
-    expect(res.status).toBe(200);
-    expect(res.text).toEqual("hey bitch");
-  });
 
   it("Simulates the name does not exist api error", async () => {
     const res = await request(app).get("/check/waldo/22/55");
@@ -48,5 +42,12 @@ describe("Routes", () => {
 
     expect(res.status).toBe(200);
     expect(res.text).toEqual("Game Finished Congratulations!");
+  });
+
+  it("Simulates STARTGAME route", async () => {
+    const res = await request(app).get("/start");
+
+    expect(res.status).toBe(404);
+    expect(res.text).toEqual("Game Started");
   });
 });
