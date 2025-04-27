@@ -1,21 +1,46 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import Gameboard from "../components/GameBoard";
-import TargetSelector from "../components/TargetSelector";
+import { MemoryRouter, Routes, Route } from "react-router-dom";
+import { GameProvider } from "../context/GameContext";
 
 describe("Gameboard", () => {
   it("renders the background image", () => {
-    render(<Gameboard />);
+    render(
+      <MemoryRouter initialEntries={["/game"]}>
+        {" "}
+        {/* ✅ Start at /game */}
+        <GameProvider>
+          <Routes>
+            <Route path="/game" element={<Gameboard />} />{" "}
+            {/* ✅ Correct path */}
+          </Routes>
+        </GameProvider>
+      </MemoryRouter>
+    );
+
     const image = screen.getByAltText(/Game background/i);
     expect(image).toBeInTheDocument();
   });
 
   it("Renders the target selector when user clicks on the screen", async () => {
-    render(<Gameboard />);
+    render(
+      <MemoryRouter initialEntries={["/game"]}>
+        {" "}
+        {/* ✅ Start at /game */}
+        <GameProvider>
+          <Routes>
+            <Route path="/game" element={<Gameboard />} />{" "}
+            {/* ✅ Correct path */}
+          </Routes>
+        </GameProvider>
+      </MemoryRouter>
+    );
 
     const image = screen.getByAltText(/Game background/i);
 
     fireEvent.click(image);
+
     const list = screen.getByRole("list");
     expect(list).toBeInTheDocument();
   });
