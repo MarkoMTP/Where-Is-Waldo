@@ -1,11 +1,15 @@
 import "../styles/targetselector.css";
 import api from "../../api.js";
+import { useGame } from "../context/GameContext.jsx";
 function TargetSelector({ x, y, relativeX, relativeY }) {
-  //handle check if it matches
+  const { gameFinished, setGameFinished } = useGame();
 
   const handleClick = async function (name, relativeX, relativeY) {
     const result = await api.get(`/check/${name}/${relativeX}/${relativeY}`);
 
+    if (result.data === "Game Finished Congratulations!") {
+      setGameFinished(true);
+    }
     console.log(result);
   };
 

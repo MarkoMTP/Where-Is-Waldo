@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import TargetSelector from "./TargetSelector";
+import { useGame } from "../context/GameContext";
 
 function Gameboard() {
   const [clickCoords, setClickCoords] = useState(null);
   const imageRef = useRef();
+  const { gameFinished, setGameFinished } = useGame();
 
   const handleClick = function (e) {
     const rect = imageRef.current.getBoundingClientRect();
@@ -48,6 +50,7 @@ function Gameboard() {
           onClose={() => setClickCoords(null)}
         />
       )}
+      {gameFinished === true ? <h1>Hello</h1> : null}
     </div>
   );
 }

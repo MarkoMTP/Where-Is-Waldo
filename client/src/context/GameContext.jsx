@@ -4,23 +4,13 @@ import { createContext, useContext, useState } from "react";
 const GameContext = createContext();
 
 export function GameProvider({ children }) {
-  const [clickCoordX, setClickCoordX] = useState(null);
-  const [clickCoordY, setClickCoordY] = useState(null);
-
-  const [foundCharacters, setFoundCharacters] = useState([]);
-  const [sessionId, setSessionId] = useState(null);
+  const [gameFinished, setGameFinished] = useState(false);
 
   return (
     <GameContext.Provider
       value={{
-        clickCoordX,
-        setClickCoordX,
-        clickCoordY,
-        setClickCoordY,
-        foundCharacters,
-        setFoundCharacters,
-        sessionId,
-        setSessionId,
+        gameFinished,
+        setGameFinished,
       }}
     >
       {children}
