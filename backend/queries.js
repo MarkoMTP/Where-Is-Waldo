@@ -18,3 +18,23 @@ export async function updateIsFound(name) {
     throw err;
   }
 }
+
+export async function addNewStartTime() {
+  await prisma.gameTime.create({
+    data: {
+      startTime: new Date(),
+      endTime: new Date(),
+    },
+  });
+}
+
+export async function resetGameCharacters() {
+  try {
+    await prisma.wantedChars.updateMany({
+      data: { isFound: false },
+    });
+    console.log("Game reset: all characters are now isFound: false");
+  } catch (err) {
+    console.error("❌ Failed to reset characters:", err);
+  }
+}

@@ -47,7 +47,7 @@ describe("Routes", () => {
   it("Simulates STARTGAME route", async () => {
     const res = await request(app).get("/start");
 
-    expect(res.status).toBe(404);
-    expect(res.text).toEqual("Game Started");
+    expect(res.status).toBe(200);
+    expect(res.text).toEqual("Game started");
   });
 });

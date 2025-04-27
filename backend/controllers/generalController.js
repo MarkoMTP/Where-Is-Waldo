@@ -1,5 +1,9 @@
 import checkGame from "../middleware/checkGame.js";
-import findAllChars, { addNewStartTime } from "../queries.js";
+import { startGame } from "../middleware/startGame.js";
+import findAllChars, {
+  addNewStartTime,
+  resetGameCharacters,
+} from "../queries.js";
 import { updateIsFound } from "../queries.js";
 
 export default async function controllerCheckCharacter(req, res) {
@@ -36,6 +40,9 @@ export default async function controllerCheckCharacter(req, res) {
       const isGameFinished = await checkGame();
 
       if (isGameFinished === true) {
+        //added this check it out why it does not reset the game
+        await resetGameCharacters();
+
         return res.status(200).send("Game Finished Congratulations!");
       } else {
         return res.status(200).send(`${name} has been Found`);
@@ -49,12 +56,12 @@ export default async function controllerCheckCharacter(req, res) {
   }
 }
 
-export async function startGame(req, res) {
+export async function startGameController(req, res) {
   try {
-    await addNewStartTime();
-    res.status(404).send("Game Started");
+    await startGame();
+    res.status(200).send("Game started");
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Server error" });
+    res.status(404).json({ error: "Server error" });
   }
 }

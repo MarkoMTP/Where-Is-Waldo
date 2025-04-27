@@ -14,3 +14,15 @@ model WantedChars {
   y       Float
   isFound Boolean @default(false)
 }
+
+model Player {
+  id   Int    @id @default(autoincrement())
+  name String
+  time Int
+}
+
+model GameTime {
+  id        Int      @id @default(autoincrement())
+  startTime DateTime
+  endTime   DateTime
+}
