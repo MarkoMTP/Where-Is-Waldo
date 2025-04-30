@@ -50,4 +50,36 @@ describe("Routes", () => {
     expect(res.status).toBe(200);
     expect(res.text).toEqual("Game started");
   });
+
+  it("End Game route success", async () => {
+    const res = await request(app)
+      .post("/end")
+      .set("Content-Type", "application/json")
+      .send({
+        userName: "John",
+        time: 82,
+      });
+
+    expect(res.status).toBe(200);
+    expect(res.text).toEqual("Game Completed");
+  });
+
+  it("Misses username for end route", async () => {
+    const res = await request(app).post("/end").send({
+      userName: "",
+      time: 82,
+    });
+
+    expect(res.status).toBe(400);
+    expect(res.text).toEqual("Missing username");
+  });
+  it("Misses time for end route", async () => {
+    const res = await request(app).post("/end").send({
+      userName: "Hey",
+      time: "",
+    });
+
+    expect(res.status).toBe(400);
+    expect(res.text).toEqual("Missing time");
+  });
 });

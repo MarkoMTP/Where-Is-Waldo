@@ -1,6 +1,7 @@
 import checkGame from "../middleware/checkGame.js";
 import { startGame } from "../middleware/startGame.js";
 import findAllChars, {
+  addNewPlayer,
   addNewStartTime,
   resetGameCharacters,
 } from "../queries.js";
@@ -60,6 +61,27 @@ export async function startGameController(req, res) {
   try {
     await startGame();
     res.status(200).send("Game started");
+  } catch (err) {
+    console.error(err);
+    res.status(404).json({ error: "Server error" });
+  }
+}
+
+export async function endGameController(req, res) {
+  try {
+    const { userName, time } = req.body;
+
+    if (!time) {
+      return res.status(400).send("Missing time");
+    }
+
+    if (!userName) {
+      return res.status(400).send("Missing username");
+    }
+
+    await addNewPlayer(userName, time);
+
+    res.status(200).send("Game Completed");
   } catch (err) {
     console.error(err);
     res.status(404).json({ error: "Server error" });

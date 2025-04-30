@@ -1,4 +1,4 @@
-import { addNewStartTime, resetGameCharacters } from "../queries";
+import { addNewStartTime, resetGameCharacters } from "../queries.js";
 
 export async function startGame() {
   try {

@@ -38,3 +38,16 @@ export async function resetGameCharacters() {
     console.error("❌ Failed to reset characters:", err);
   }
 }
+
+export async function addNewPlayer(userName, gameTime) {
+  try {
+    await prisma.player.create({
+      data: {
+        name: userName,
+        time: gameTime,
+      },
+    });
+  } catch (err) {
+    console.error("Failed to add new player");
+  }
+}
