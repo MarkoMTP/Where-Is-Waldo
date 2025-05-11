@@ -1,11 +1,27 @@
 import { useEffect, useRef, useState } from "react";
 import TargetSelector from "./TargetSelector";
 import { useGame } from "../context/GameContext";
+import UsernamePopup from "./UserNameForm";
+import CrossMarker from "./CrossMarker";
+import getPixelPosition from "../middleware/getPixelPosition";
 
 function Gameboard() {
   const [clickCoords, setClickCoords] = useState(null);
   const imageRef = useRef();
-  const { gameFinished, setGameFinished } = useGame();
+  const {
+    gameFinished,
+    setGameFinished,
+    megFound,
+    setMegFound,
+    jokerFound,
+    setJokerFound,
+    batmanFound,
+    setBatmanFound,
+  } = useGame();
+
+  const megPosition = getPixelPosition(imageRef, 44.95, 288.84);
+  const jokerPosition = getPixelPosition(imageRef, 77, 76.7);
+  const batmanPosition = getPixelPosition(imageRef, 4.15, 261.2);
 
   const handleClick = function (e) {
     const rect = imageRef.current.getBoundingClientRect();
@@ -41,7 +57,7 @@ function Gameboard() {
         }}
       />
 
-      {clickCoords && (
+      {clickCoords && gameFinished === false && (
         <TargetSelector
           x={clickCoords.x}
           y={clickCoords.y}
@@ -50,7 +66,12 @@ function Gameboard() {
           onClose={() => setClickCoords(null)}
         />
       )}
-      {gameFinished === true ? <h1>Hello</h1> : null}
+
+      {megFound && <CrossMarker x={megPosition.x} y={megPosition.y} />}
+      {jokerFound && <CrossMarker x={jokerPosition.x} y={jokerPosition.y} />}
+      {batmanFound && <CrossMarker x={batmanPosition.x} y={batmanPosition.y} />}
+
+      {gameFinished === true ? <UsernamePopup /> : null}
     </div>
   );
 }

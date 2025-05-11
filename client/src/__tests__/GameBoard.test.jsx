@@ -2,7 +2,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import Gameboard from "../components/GameBoard";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
-import { GameProvider } from "../context/GameContext";
+import { GameContext, GameProvider } from "../context/GameContext";
 
 describe("Gameboard", () => {
   it("renders the background image", () => {
@@ -43,5 +43,22 @@ describe("Gameboard", () => {
 
     const list = screen.getByRole("list");
     expect(list).toBeInTheDocument();
+  });
+
+  it("Renders the username form when game is finished", async () => {
+    render(
+      <MemoryRouter initialEntries={["/game"]}>
+        <GameContext.Provider
+          value={{ gameFinished: true, setGameFinished: () => {} }}
+        >
+          <Routes>
+            <Route path="/game" element={<Gameboard />} />
+          </Routes>
+        </GameContext.Provider>
+      </MemoryRouter>
+    );
+
+    // assert the form or heading exists
+    expect(screen.getByText(/Enter Your Name/i)).toBeInTheDocument();
   });
 });

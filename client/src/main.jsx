@@ -6,11 +6,14 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import routes from "./components/Routes";
+import { GameProvider } from "./context/GameContext";
 
 const router = createBrowserRouter(routes);
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <GameProvider>
+      <RouterProvider router={router} />
+    </GameProvider>
   </StrictMode>
 );
