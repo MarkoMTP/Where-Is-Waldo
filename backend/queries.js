@@ -61,14 +61,20 @@ export async function findLatestTime() {
     console.error("Failed to find latest time");
   }
 }
-
 export async function updateLatestTime(latestTime) {
   try {
     return await prisma.gameTime.update({
       where: { id: latestTime.id },
       data: { endTime: new Date() },
+      // Force returning all fields
+      select: {
+        id: true,
+        startTime: true,
+        endTime: true,
+      },
     });
   } catch (err) {
-    console.error("Failed to find latest time");
+    console.error("Failed to update latest time", err);
+    throw err;
   }
 }

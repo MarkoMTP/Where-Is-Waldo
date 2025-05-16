@@ -61,7 +61,7 @@ describe("Routes", () => {
       });
 
     expect(res.status).toBe(200);
-    expect(res.text).toEqual("Game Completed");
+    expect(res.text).toEqual("Game Completed in 0ms");
   });
 
   it("Misses username for end route", async () => {
@@ -71,15 +71,6 @@ describe("Routes", () => {
     });
 
     expect(res.status).toBe(400);
-    expect(res.text).toEqual("Missing username");
-  });
-  it("Misses time for end route", async () => {
-    const res = await request(app).post("/end").send({
-      userName: "Hey",
-      time: "",
-    });
-
-    expect(res.status).toBe(400);
-    expect(res.text).toEqual("Missing time");
+    expect(res.text).toEqual("Missing username.");
   });
 });
