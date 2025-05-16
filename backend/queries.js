@@ -51,3 +51,24 @@ export async function addNewPlayer(userName, gameTime) {
     console.error("Failed to add new player");
   }
 }
+
+export async function findLatestTime() {
+  try {
+    return await prisma.gameTime.findFirst({
+      orderBy: { id: "desc" }, // or use createdAt if you have that
+    });
+  } catch (err) {
+    console.error("Failed to find latest time");
+  }
+}
+
+export async function updateLatestTime(latestTime) {
+  try {
+    return await prisma.gameTime.update({
+      where: { id: latestTime.id },
+      data: { endTime: new Date() },
+    });
+  } catch (err) {
+    console.error("Failed to find latest time");
+  }
+}

@@ -1,8 +1,10 @@
 import checkGame from "../middleware/checkGame.js";
+import { updateEndTimeOfLatest } from "../middleware/getTime.js";
 import { startGame } from "../middleware/startGame.js";
 import findAllChars, {
   addNewPlayer,
   addNewStartTime,
+  findLatestTime,
   resetGameCharacters,
 } from "../queries.js";
 import { updateIsFound } from "../queries.js";
@@ -66,24 +68,28 @@ export async function startGameController(req, res) {
     res.status(404).json({ error: "Server error" });
   }
 }
-
 export async function endGameController(req, res) {
   try {
-    const { userName, time } = req.body;
+    const { userName } = req.body;
+    console.log(`user: ${userName}`);
 
-    if (!time) {
-      return res.status(400).send("Missing time");
+    const gameDuration = await updateEndTimeOfLatest();
+
+    if (gameDuration === null) {
+      return res.status(400).send("No game time to update.");
     }
 
     if (!userName) {
-      return res.status(400).send("Missing username");
+      return res.status(400).send("Missing username.");
     }
 
-    await addNewPlayer(userName, time);
+    console.log("Game Duration:", gameDuration);
+    await addNewPlayer(userName, gameDuration);
 
-    res.status(200).send("Game Completed");
+    res.status(200).send(`Game Completed in ${gameDuration}ms`);
   } catch (err) {
-    console.error(err);
-    res.status(404).json({ error: "Server error" });
+    // ✅ Only catch here if you want to send an error response
+    console.error("Controller error:", err);
+    res.status(500).send("Server error.");
   }
 }
