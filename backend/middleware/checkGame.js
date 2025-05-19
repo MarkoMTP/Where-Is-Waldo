@@ -1,4 +1,4 @@
-import findAllChars from "../queries.js";
+import { findAllChars } from "../queries.js";
 
 export default async function checkGame() {
   try {

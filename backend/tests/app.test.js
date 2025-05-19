@@ -5,8 +5,7 @@ import app from "../server.js";
 import { afterAll, beforeEach, describe, expect, it } from "vitest";
 
 //prisma setup
-import dotenv from "dotenv";
-dotenv.config({ path: ".env" });
+
 import prisma from "../prisma/prismaClient.js";
 
 afterAll(async () => {
@@ -41,7 +40,7 @@ describe("Routes", () => {
     const res = await request(app).get("/check/Meg/44.95/288");
 
     expect(res.status).toBe(200);
-    expect(res.text).toEqual("Game Finished Congratulations!");
+    expect(res.text).toEqual("Meg has been Found");
   });
 
   it("Simulates STARTGAME route", async () => {
@@ -72,5 +71,20 @@ describe("Routes", () => {
 
     expect(res.status).toBe(400);
     expect(res.text).toEqual("Missing username.");
+  });
+
+  it("Successfully finds players for leaderboard", async () => {
+    const res = await request(app).get("/leaderboard");
+
+    expect(res.status).toBe(200);
+  });
+  it("Returns 404 when no players are found", async () => {
+    // ✅ Clear the Player table before running the test
+    await prisma.player.deleteMany();
+
+    const res = await request(app).get("/leaderboard");
+
+    expect(res.status).toBe(404);
+    expect(res.text).toBe("No players found");
   });
 });

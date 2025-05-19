@@ -1,13 +1,15 @@
 import checkGame from "../middleware/checkGame.js";
 import { updateEndTimeOfLatest } from "../middleware/getTime.js";
 import { startGame } from "../middleware/startGame.js";
-import findAllChars, {
+import {
   addNewPlayer,
   addNewStartTime,
   findLatestTime,
   resetGameCharacters,
+  updateIsFound,
+  getAllPlayers,
+  findAllChars,
 } from "../queries.js";
-import { updateIsFound } from "../queries.js";
 
 export default async function controllerCheckCharacter(req, res) {
   try {
@@ -89,6 +91,21 @@ export async function endGameController(req, res) {
     res.status(200).send(`Game Completed in ${gameDuration}ms`);
   } catch (err) {
     // ✅ Only catch here if you want to send an error response
+    console.error("Controller error:", err);
+    res.status(500).send("Server error.");
+  }
+}
+
+export async function leaderboardController(req, res) {
+  try {
+    const players = await getAllPlayers();
+
+    if (!players || players.length === 0) {
+      return res.status(404).send("No players found");
+    }
+
+    return res.status(200).json(players);
+  } catch (err) {
     console.error("Controller error:", err);
     res.status(500).send("Server error.");
   }

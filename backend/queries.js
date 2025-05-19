@@ -1,6 +1,6 @@
 import prisma from "./prisma/prismaClient.js";
 
-export default async function findAllChars() {
+export async function findAllChars() {
   const characters = await prisma.wantedChars.findMany();
   return characters;
 }
@@ -77,4 +77,9 @@ export async function updateLatestTime(latestTime) {
     console.error("Failed to update latest time", err);
     throw err;
   }
+}
+
+export async function getAllPlayers() {
+  const players = await prisma.player.findMany();
+  return players;
 }
