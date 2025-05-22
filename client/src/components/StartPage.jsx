@@ -9,7 +9,7 @@ export default function StartPage() {
       <h1>Where Is Waldo</h1>
       <button onClick={() => startBtnHandler(navigate)}>Start Game</button>
 
-      {/* <button onClick={() => navigate("/leaderboard")}>Leaderboard</button> */}
+      {<button onClick={() => navigate("/leaderboard")}>Leaderboard</button>}
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import Gameboard from "./GameBoard";
 import StartPage from "./StartPage";
+import LeaderBoard from "./LeaderBoard";
 
 const routes = [
   {
@@ -13,6 +14,10 @@ const routes = [
   },
 
   // leaderboard
+  {
+    path: "/leaderboard",
+    element: <LeaderBoard />,
+  },
 ];
 
 export default routes;
