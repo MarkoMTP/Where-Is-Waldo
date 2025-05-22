@@ -8,7 +8,10 @@ export default function Leaderboard() {
     async function fetchLeaderboard() {
       try {
         const response = await api.get("/leaderboard"); // Adjust the URL if needed
-        setPlayers(response.data);
+
+        const sorted = response.data.sort((a, b) => a.time - b.time);
+
+        setPlayers(sorted);
       } catch (err) {
         console.error("Failed to load leaderboard:", err);
       }
@@ -59,10 +62,4 @@ const tableStyle = {
   width: "80%",
   maxWidth: "600px",
   border: "1px solid #ddd",
-};
-
-const thTdStyle = {
-  border: "1px solid #ddd",
-  padding: "8px",
-  textAlign: "center",
 };
