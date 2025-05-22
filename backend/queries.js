@@ -81,8 +81,10 @@ export async function updateLatestTime(latestTime) {
 export async function getAllPlayers() {
   const players = await prisma.player.findMany({
     orderBy: {
-      time: "asc", // ✅ Ascending = shortest time first
+      time: "desc", // ✅ Ascending = shortest time first
     },
   });
+  console.log("✅ Sorted players by time ASC:", players);
+
   return players;
 }
