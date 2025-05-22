@@ -78,8 +78,11 @@ export async function updateLatestTime(latestTime) {
     throw err;
   }
 }
-
 export async function getAllPlayers() {
-  const players = await prisma.player.findMany();
+  const players = await prisma.player.findMany({
+    orderBy: {
+      time: "asc", // ✅ Ascending = shortest time first
+    },
+  });
   return players;
 }
