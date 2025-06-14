@@ -40,7 +40,7 @@ describe("Routes", () => {
     const res = await request(app).get("/check/Meg/44.95/288");
 
     expect(res.status).toBe(200);
-    expect(res.text).toEqual("Meg has been Found");
+    expect(res.text).toEqual("Game Finished Congratulations!");
   });
 
   it("Simulates STARTGAME route", async () => {

@@ -7,6 +7,8 @@ export default async function startBtnHandler(navigate) {
     const startRes = await api.get("/start");
     if (startRes.data === "Game started") {
       navigate("/game");
+      window.location.reload();
+
       console.log(startRes.data);
     } else {
       console.log("Error with calling the api");
