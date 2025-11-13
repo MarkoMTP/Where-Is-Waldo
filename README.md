@@ -8,7 +8,7 @@ This project demonstrates full-stack app development with authentication, API in
 
 🚀 Tech Stack
 
-Frontend: React + Vite + CSS (Tailwind optional)
+Frontend: React + Vite + CSS 
 
 Backend: Node.js + Express
 
